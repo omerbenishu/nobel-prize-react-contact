@@ -36,20 +36,12 @@ async function render(data) {
     // wiki image https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&prop=pageimages|pageterms&piprop=thumbnail&pithumbsize=500&titles=Albert Einstein
 
     laureatesArray.forEach(element => {
+      nobelPrizes = element['nobelPrizes']
 
       laureateName = document.createElement(titleType)
       laureateName.innerHTML = element['fullName'][lang]
       laureateName.className = 'title'
 
-      laureateDesc = document.createElement(descType)
-      nobelPrizes = element['nobelPrizes']
-      var desc = ''
-      nobelPrizes.forEach(nobel => {
-        desc += nobel['motivation'][lang]
-      })
-      laureateDesc.innerText = capitalizeFirstLetter(desc)
-      laureateDesc.className = 'desc'
-      
       const catImg = document.createElement('img')
       catImg.alt = nobelPrizes[0]['category'][lang]
       catImg.src = getCategoryImage(element)
@@ -69,9 +61,27 @@ async function render(data) {
       year.innerHTML = nobelPrizes[0]['awardYear']
       year.className = 'year'
 
+      const infoImg = document.createElement('img')
+      infoImg.src = './resources/idea.png'
+      infoImg.className = 'infoImg'
+
+
+      laureateDesc = document.createElement(descType)
+      var desc = ''
+      nobelPrizes.forEach(nobel => {
+        desc += nobel['motivation'][lang]
+      })
+
+      laureateDesc.innerText = capitalizeFirstLetter(desc)
+      laureateDesc.prepend(infoImg)
+
+      laureateDesc.className = 'desc'
+
+
+
       const card = document.createElement('div');
       card.className = dataClassName;
-      card.append(laureateName, catImg, category, newLineElement() , dateImg, year, laureateDesc)
+      card.append(laureateName, catImg, category, newLineElement() , dateImg, year, newLineElement(),laureateDesc)
 
       const presenter = document.createElement('div');
       presenter.className = itemClassName;
