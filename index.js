@@ -50,23 +50,35 @@ async function render(data) {
       laureateDesc.innerText = capitalizeFirstLetter(desc)
       laureateDesc.className = 'desc'
       
-      const img = document.createElement('img')
-      img.style.maxHeight = '20px';
-      img.style.maxWidth = '20px';
-      img.alt = nobelPrizes[0]['category'][lang]
-      img.src = getCategoryImage(element)
-      img.style.marginRight = '4px'
-      img.style.verticalAlign = 'middle';
-      
+      const catImg = document.createElement('img')
+      catImg.style.maxHeight = '20px';
+      catImg.style.maxWidth = '20px';
+      catImg.alt = nobelPrizes[0]['category'][lang]
+      catImg.src = getCategoryImage(element)
+      catImg.style.marginRight = '4px'
+      catImg.style.verticalAlign = 'middle';
+
 
       const category = document.createElement('span');
       category.innerHTML = nobelPrizes[0]['category'][lang]
       category.style.verticalAlign = 'middle';
       category.className = 'category'
 
+      const dateImg = document.createElement('img')
+      dateImg.style.maxHeight = '20px';
+      dateImg.style.maxWidth = '20px';
+      dateImg.src = './resources/calendarIcon.png'
+      dateImg.style.marginRight = '4px'
+      dateImg.style.verticalAlign = 'middle';
+
+      const year = document.createElement('span');
+      year.innerHTML = nobelPrizes[0]['awardYear']
+      year.style.verticalAlign = 'middle';
+      year.className = 'year'
+
       const card = document.createElement('div');
       card.className = dataClassName;
-      card.append(laureateName, img, category, laureateDesc)
+      card.append(laureateName, catImg, category, newLineElement() , dateImg, year, laureateDesc)
 
       const presenter = document.createElement('div');
       presenter.className = itemClassName;
@@ -102,6 +114,10 @@ function getCategoryImage(element){
 
 function capitalizeFirstLetter(string) {
   return string[0].toUpperCase() + string.slice(1);
+}
+
+function newLineElement(){
+  return document.createElement('br')
 }
 
 document.addEventListener('DOMContentLoaded', () => {
