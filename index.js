@@ -51,29 +51,22 @@ async function render(data) {
       laureateDesc.className = 'desc'
       
       const catImg = document.createElement('img')
-      catImg.style.maxHeight = '20px';
-      catImg.style.maxWidth = '20px';
       catImg.alt = nobelPrizes[0]['category'][lang]
       catImg.src = getCategoryImage(element)
-      catImg.style.marginRight = '4px'
-      catImg.style.verticalAlign = 'middle';
+      catImg.className = 'categoryImg'
 
 
       const category = document.createElement('span');
       category.innerHTML = nobelPrizes[0]['category'][lang]
-      category.style.verticalAlign = 'middle';
       category.className = 'category'
 
       const dateImg = document.createElement('img')
-      dateImg.style.maxHeight = '20px';
-      dateImg.style.maxWidth = '20px';
       dateImg.src = './resources/calendarIcon.png'
-      dateImg.style.marginRight = '4px'
-      dateImg.style.verticalAlign = 'middle';
+      dateImg.className = 'dateImg'
+
 
       const year = document.createElement('span');
       year.innerHTML = nobelPrizes[0]['awardYear']
-      year.style.verticalAlign = 'middle';
       year.className = 'year'
 
       const card = document.createElement('div');

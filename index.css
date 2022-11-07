@@ -74,6 +74,7 @@ body {
 
 .category{
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  vertical-align: middle;
 }
 
 .desc {
@@ -86,6 +87,7 @@ body {
 
 .year{
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  vertical-align: middle;
 }
 
 br {
@@ -93,4 +95,18 @@ br {
   margin: 2em;
   display: block;
   font-size: 24%;
+}
+
+.categoryImg{
+  max-height: 20px;
+  max-width: 20px;
+  margin-right: 4px;
+  vertical-align: middle
+}
+
+.dateImg{
+  max-height: 20px;
+  max-width: 20px;
+  margin-right: 4px;
+  vertical-align: middle
 }
