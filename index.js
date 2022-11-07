@@ -44,18 +44,27 @@ async function render(data) {
       nobelPrizes = element['nobelPrizes']
       var desc = ''
       nobelPrizes.forEach(nobel => {
-        desc += 'Category: ' + nobel['category'][lang] + '\n' + nobel['motivation'][lang]
+        desc += nobel['motivation'][lang]
       })
       laureateDesc.innerText = desc
       
-      //const img = document.createElement('img')
-      //img.src = 'https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&titles=Jaguar&pithumbsize=500'
+      const img = document.createElement('img')
+      img.style.maxHeight = '20px';
+      img.style.maxWidth = '20px';
+      img.alt = nobelPrizes[0]['category'][lang]
+      img.src = getCategoryImage(element)
+      img.style.marginRight = '4px'
+      img.style.verticalAlign = 'middle';
+      
 
+      const category = document.createElement('span');
+      category.innerHTML = nobelPrizes[0]['category'][lang]
+      category.style.verticalAlign = 'middle';
 
 
       const card = document.createElement('div');
       card.className = dataClassName;
-      card.append(laureateName, laureateDesc)
+      card.append(laureateName, img, category, laureateDesc)
 
       const presenter = document.createElement('div');
       presenter.className = itemClassName;
@@ -70,6 +79,23 @@ async function getWikiImage(laureateData){
   fetch('https://www.wikidata.org/wiki/Special:EntityData/Q173500.json').
   then(data => data.json()).
   then(data => console.log(data))
+}
+
+function getCategoryImage(element){
+  switch(element['nobelPrizes'][0]['category']['en']){
+    case 'Physics':
+      return './resources/physicsIcon.png';
+    case 'Economic Sciences':
+      return './resources/economicIcon.png';
+    case 'Literature':
+      return './resources/literatureIcon.png';
+    case 'Chemistry':
+      return './resources/chemistryIcon.png';
+    case 'Peace':
+      return './resources/peaceIcon.png';
+    case 'Physiology or Medicine':
+      return './resources/medIcon.png';
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
