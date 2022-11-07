@@ -9,7 +9,7 @@
 const app = document.getElementById('app');
 const apiPrefix = "https://api.nobelprize.org/2.1/laureates"
 var currentQuery = ''
-const titleType = 'h2'
+const titleType = 'h3'
 const descType = 'p'
 const dataClassName = 'data'
 const itemClassName = 'item'
@@ -39,6 +39,7 @@ async function render(data) {
 
       laureateName = document.createElement(titleType)
       laureateName.innerHTML = element['fullName'][lang]
+      laureateName.className = 'title'
 
       laureateDesc = document.createElement(descType)
       nobelPrizes = element['nobelPrizes']
@@ -46,7 +47,8 @@ async function render(data) {
       nobelPrizes.forEach(nobel => {
         desc += nobel['motivation'][lang]
       })
-      laureateDesc.innerText = desc
+      laureateDesc.innerText = capitalizeFirstLetter(desc)
+      laureateDesc.className = 'desc'
       
       const img = document.createElement('img')
       img.style.maxHeight = '20px';
@@ -60,7 +62,7 @@ async function render(data) {
       const category = document.createElement('span');
       category.innerHTML = nobelPrizes[0]['category'][lang]
       category.style.verticalAlign = 'middle';
-
+      category.className = 'category'
 
       const card = document.createElement('div');
       card.className = dataClassName;
@@ -96,6 +98,10 @@ function getCategoryImage(element){
     case 'Physiology or Medicine':
       return './resources/medIcon.png';
   }
+}
+
+function capitalizeFirstLetter(string) {
+  return string[0].toUpperCase() + string.slice(1);
 }
 
 document.addEventListener('DOMContentLoaded', () => {

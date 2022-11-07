@@ -70,3 +70,15 @@ body {
   /* visual helper */
   border: 1px dotted blueviolet;
 }
+
+.category{
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.desc {
+  font-family: 'Roboto', sans-serif;
+}
+
+.title{
+  font-family: 'NunitoSans', sans-serif;
+}
