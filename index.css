@@ -116,3 +116,10 @@ br {
   max-width: 20px;
   margin-right: 8px;
 }
+
+.flagImg{
+  max-height: 20px;
+  max-width: 20px;
+  margin-right: 8px;
+  vertical-align: middle
+}

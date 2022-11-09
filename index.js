@@ -7,7 +7,7 @@
 // notice in our html we have a node with ID "app"
 // hint: use this reference later to inject data into your page
 const app = document.getElementById('app');
-const apiPrefix = "https://api.nobelprize.org/2.1/laureates"
+const apiPrefix = "https://api.nobelprize.org/2.1/laureates?limit=40"
 var currentQuery = ''
 const titleType = 'h3'
 const descType = 'p'
@@ -33,7 +33,6 @@ async function render(data) {
 
     // Sorting
 
-    // wiki image https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&prop=pageimages|pageterms&piprop=thumbnail&pithumbsize=500&titles=Albert Einstein
 
     laureatesArray.forEach(element => {
       nobelPrizes = element['nobelPrizes']
@@ -41,6 +40,17 @@ async function render(data) {
       laureateName = document.createElement(titleType)
       laureateName.innerHTML = element['fullName'][lang]
       laureateName.className = 'title'
+
+      const flagImg = document.createElement('img')
+      try{ country = element['birth']['place']['countryNow'][lang].toLowerCase() }
+      catch(err){ country = 'world'}
+      country = country.replace(' ', '-')
+
+      if (country.includes('palestine')){ country = 'israel'}
+      flagImg.src = './resources/flags/' + country + '.png'
+      flagImg.className = 'flagImg'
+      
+      laureateName.prepend(flagImg)
 
       const catImg = document.createElement('img')
       catImg.alt = nobelPrizes[0]['category'][lang]
