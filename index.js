@@ -17,14 +17,18 @@ var lang = 'en'
 async function getData() {
   // write you logic for getting the data from the API here
   // return your data from this function
-  fetch(apiPrefix + currentQuery).
-  then(data => data.json()).
-  then(data => render(data))
+  // fetch(apiPrefix + currentQuery).
+  // then(data => data.json()).
+  // then(data => render(data))
   
+  const response = await fetch(apiPrefix + currentQuery);
+  data = await response.json();
+  return data;
 
 }
 
-async function render(data) {
+async function render() {
+    data = await getData();
     var laureatesArray = data['laureates']
     console.log(laureatesArray[0])
     
