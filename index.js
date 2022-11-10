@@ -32,7 +32,7 @@ async function renderUI(data) {
       } catch (err) {
         country = "World";
       }
-      t.content.querySelector(".flagImg").title = country;
+      t.content.querySelector(".flagImg").title = capitalizeFirstLetter(country);
 
       country = country.toLowerCase().replace(" ", "-");
       const flagSrc = "./resources/flags/" + country + ".png";
