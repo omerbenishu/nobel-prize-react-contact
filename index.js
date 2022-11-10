@@ -1,115 +1,55 @@
-//////////////
-// we have a basic skeleton here to help you start.
-// if you dont want to use it you dont have to -
-// just clear the file and start from scratch
-//////////////
-
-// notice in our html we have a node with ID "app"
-// hint: use this reference later to inject data into your page
 const app = document.getElementById('app');
-const apiPrefix = "https://api.nobelprize.org/2.1/laureates?limit=40"
+const API_PREFIX = "https://api.nobelprize.org/2.1/laureates?limit=40"
 var currentQuery = ''
 const titleType = 'h3'
 const descType = 'p'
 const dataClassName = 'data'
 const itemClassName = 'item'
 var lang = 'en'
+
 async function getData() {
-  // write you logic for getting the data from the API here
-  // return your data from this function
-  // fetch(apiPrefix + currentQuery).
-  // then(data => data.json()).
-  // then(data => render(data))
+  const response = await fetch(API_PREFIX + currentQuery);
+  return await response.json();
+}
+
+async function renderUI(data) {
+  var laureatesArray = data['laureates']
+  console.log(laureatesArray[0])
   
-  const response = await fetch(apiPrefix + currentQuery);
-  data = await response.json();
-  return data;
+  
+  // Filtering
 
-}
+  // Sorting
 
-async function render() {
-    data = await getData();
-    var laureatesArray = data['laureates']
-    console.log(laureatesArray[0])
-    
-    
-    // Filtering
+  laureatesArray.forEach(element => {
 
-    // Sorting
+        // select
+    var t = document.querySelector('#item-template').cloneNode(true);
+    const nobelPrizes = element['nobelPrizes']
 
+    let country
+    try { country = element['birth']['place']['countryNow'][lang]}
+    catch(err){ country = 'World'}
+    t.content.querySelector('.flagImg').title = country
 
-    laureatesArray.forEach(element => {
-      nobelPrizes = element['nobelPrizes']
+    country = country.toLowerCase().replace(' ', '-')
+    t.content.querySelector('.flagImg').src = './resources/flags/' + country + '.png'
+    t.content.querySelector(titleType).innerHTML += element['fullName'][lang]
+    t.content.querySelector('.categoryImg').title = nobelPrizes[0]['category'][lang]
+    t.content.querySelector('.categoryImg').src = getCategoryImage(element)
+    t.content.querySelector('.category').innerHTML = nobelPrizes[0]['category'][lang]
+    t.content.querySelector('.dateImg').src = './resources/calendarIcon.png'
+    t.content.querySelector('.year').innerHTML = nobelPrizes[0]['awardYear']
+    t.content.querySelector('.infoImg').src = './resources/idea.png'
+    var desc = ''
+    nobelPrizes.forEach(nobel => {
+      desc += nobel['motivation'][lang]
+    })
+    t.content.querySelector('.desc').innerHTML += capitalizeFirstLetter(desc)
 
-      laureateName = document.createElement(titleType)
-      laureateName.innerHTML = element['fullName'][lang]
-      laureateName.className = 'title'
+    document.getElementById('app').append(t.content);
+  });
 
-      const flagImg = document.createElement('img')
-      try{ country = element['birth']['place']['countryNow'][lang].toLowerCase() }
-      catch(err){ country = 'world'}
-      country = country.replace(' ', '-')
-
-      if (country.includes('palestine')){ country = 'israel'}
-      flagImg.src = './resources/flags/' + country + '.png'
-      flagImg.className = 'flagImg'
-      
-      laureateName.prepend(flagImg)
-
-      const catImg = document.createElement('img')
-      catImg.alt = nobelPrizes[0]['category'][lang]
-      catImg.src = getCategoryImage(element)
-      catImg.className = 'categoryImg'
-
-
-      const category = document.createElement('span');
-      category.innerHTML = nobelPrizes[0]['category'][lang]
-      category.className = 'category'
-
-      const dateImg = document.createElement('img')
-      dateImg.src = './resources/calendarIcon.png'
-      dateImg.className = 'dateImg'
-
-
-      const year = document.createElement('span');
-      year.innerHTML = nobelPrizes[0]['awardYear']
-      year.className = 'year'
-
-      const infoImg = document.createElement('img')
-      infoImg.src = './resources/idea.png'
-      infoImg.className = 'infoImg'
-
-
-      laureateDesc = document.createElement(descType)
-      var desc = ''
-      nobelPrizes.forEach(nobel => {
-        desc += nobel['motivation'][lang]
-      })
-
-      laureateDesc.innerText = capitalizeFirstLetter(desc)
-      laureateDesc.prepend(infoImg)
-
-      laureateDesc.className = 'desc'
-
-
-
-      const card = document.createElement('div');
-      card.className = dataClassName;
-      card.append(laureateName, catImg, category, newLineElement() , dateImg, year, newLineElement(),laureateDesc)
-
-      const presenter = document.createElement('div');
-      presenter.className = itemClassName;
-      presenter.append(card);
-
-      document.getElementById('app').append(presenter);
-    });
-
-}
-
-async function getWikiImage(laureateData){
-  fetch('https://www.wikidata.org/wiki/Special:EntityData/Q173500.json').
-  then(data => data.json()).
-  then(data => console.log(data))
 }
 
 function getCategoryImage(element){
@@ -133,10 +73,11 @@ function capitalizeFirstLetter(string) {
   return string[0].toUpperCase() + string.slice(1);
 }
 
-function newLineElement(){
-  return document.createElement('br')
+function clearUI() {
+  while (app.firstChild) {
+    app.removeChild(app.firstChild);
+  }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  getData();
-})
+const data = await getData();
+await renderUI(data);
