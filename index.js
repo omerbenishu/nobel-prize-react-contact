@@ -1,5 +1,5 @@
 const app = document.getElementById("app");
-const API_PREFIX = "https://api.nobelprize.org/2.1/laureates?limit=4000";
+const API_PREFIX = "https://api.nobelprize.org/2.1/laureates?limit=40";
 var currentQuery = "";
 const titleType = "h3";
 const descType = "p";
