@@ -1,24 +1,44 @@
 const app = document.getElementById("app");
-const API_PREFIX = "https://api.nobelprize.org/2.1/laureates?limit=1000";
+const API_PREFIX = "https://api.nobelprize.org/2.1/laureates?limit=100";
 var currentQuery = "";
 const titleType = "h3";
 const descType = "p";
 const dataClassName = "data";
 const itemClassName = "item";
-var currentSort = 'Name';
-var currentFilter = 'All';
+var currentSort = "Name";
+var currentFilter = "All";
 var lang = "en";
 
 async function getData() {
   const response = await fetch(API_PREFIX + currentQuery);
-  return await response.json();
+  const json = await response.json();
+  var cleanData = [];
+  json.laureates.forEach((element) => {
+    try {
+      let eCountry;
+      try {
+        eCountry = element.birth.place.countryNow.en;
+      } catch (err) {
+        eCountry = "World";
+      }
+
+      cleanData.push({
+        country: eCountry,
+        name: element.fullName.en,
+        category: element.nobelPrizes[0].category.en,
+        year: element.nobelPrizes[0].awardYear,
+        desc: element.nobelPrizes[0].motivation.en,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+  return cleanData;
 }
 
 const dataSort = document.getElementById("data-sort");
 
 dataSort.addEventListener("change", async (event) => {
-  console.log("Data Sort Change");
-  console.log(event.target.value);
   currentSort = event.target.value;
   const data = await getData();
   const sortedData = sortData(data, event.target.value);
@@ -29,41 +49,26 @@ dataSort.addEventListener("change", async (event) => {
 const dataFilter = document.getElementById("data-filter");
 
 dataFilter.addEventListener("change", async (event) => {
-  console.log("Data Filter Change");
-  console.log(event.target.value);
   currentFilter = event.target.value;
   const data = await getData();
   const filteredData = filterData(data, event.target.value);
-  const filteredSortData = sortData(filteredData, currentSort)
+  const filteredSortData = sortData(filteredData, currentSort);
   await renderUI(filteredSortData);
 });
 
 async function renderUI(data) {
   clearUI();
-
-  var laureatesArray = data["laureates"];
-  console.log(laureatesArray.length);
-
-  // Filtering
-
-  // Sorting
-
-  laureatesArray.forEach((element) => {
+  console.log(data);
+  data.forEach((element) => {
     try {
-      // select
       var t = document.querySelector("#item-template").cloneNode(true);
-      const nobelPrizes = element["nobelPrizes"];
+      //const nobelPrizes = element["nobelPrizes"];
 
-      let country;
-      try {
-        country = element["birth"]["place"]["countryNow"][lang];
-      } catch (err) {
-        country = "World";
-      }
-      t.content.querySelector(".flagImg").title =
-        capitalizeFirstLetter(country);
+      t.content.querySelector(".flagImg").title = capitalizeFirstLetter(
+        element.country
+      );
 
-      country = country.toLowerCase().replace(" ", "-");
+      const country = element.country.toLowerCase().replace(" ", "-");
       const flagSrc = "./resources/flags/" + country + ".png";
       if (imageExists(flagSrc))
         t.content.querySelector(".flagImg").src =
@@ -71,28 +76,26 @@ async function renderUI(data) {
       else {
         t.content.querySelector(".flagImg").src = "./resources/flags/world.png";
       }
-      t.content.querySelector(titleType).innerHTML += element["fullName"][lang];
-      t.content.querySelector(".categoryImg").title =
-        nobelPrizes[0]["category"][lang];
+      t.content.querySelector(titleType).innerHTML += element.name;
+      t.content.querySelector(".categoryImg").title = element.category;
       t.content.querySelector(".categoryImg").src = getCategoryImage(element);
-      t.content.querySelector(".category").innerHTML =
-        nobelPrizes[0]["category"][lang];
+      t.content.querySelector(".category").innerHTML = element.category;
       t.content.querySelector(".dateImg").src = "./resources/calendarIcon.png";
-      t.content.querySelector(".year").innerHTML = nobelPrizes[0]["awardYear"];
+      t.content.querySelector(".year").innerHTML = element.year;
       t.content.querySelector(".infoImg").src = "./resources/idea.png";
-      var desc = "";
-      nobelPrizes.forEach((nobel) => {
-        desc += nobel["motivation"][lang];
-      });
-      t.content.querySelector(".desc").innerHTML += capitalizeFirstLetter(desc);
+      t.content.querySelector(".desc").innerHTML += capitalizeFirstLetter(
+        element.desc
+      );
 
       document.getElementById("app").append(t.content);
-    } catch {}
+    } catch (err) {
+      console.log(err);
+    }
   });
 }
 
 function getCategoryImage(element) {
-  switch (element["nobelPrizes"][0]["category"]["en"]) {
+  switch (element.category) {
     case "Physics":
       return "./resources/physicsIcon.png";
     case "Economic Sciences":
@@ -104,6 +107,8 @@ function getCategoryImage(element) {
     case "Peace":
       return "./resources/peaceIcon.png";
     case "Physiology or Medicine":
+      return "./resources/medIcon.png";
+    default:
       return "./resources/medIcon.png";
   }
 }
@@ -128,38 +133,38 @@ function imageExists(image_url) {
 }
 
 function filterData(data, key) {
-  data["laureates"] = data["laureates"].filter((person) => {
+  data = data.filter((person) => {
     if (key === "All") {
       return person;
     } else {
-      return key === person["nobelPrizes"][0]["category"]["en"];
+      return key === person.category;
     }
   });
   return data;
 }
 
 function sortData(data, key) {
-  data["laureates"] = data["laureates"].sort((a, b) => {
+  data = data.sort((a, b) => {
     if (key === "name") {
-      try{
-      return a["fullName"][lang] > b["fullName"][lang] ? 1 : -1;
+      try {
+        return a.name > b.name ? 1 : -1;
+      } catch {
+        console.log(a);
+        console.log(b);
       }
-      catch {console.log(a); console.log(b)}
     }
     if (key === "year") {
-      return a["nobelPrizes"][0]["awardYear"] > b["nobelPrizes"][0]["awardYear"]
-        ? 1
-        : -1;
+      return a.year > b.year ? 1 : -1;
     }
     if (key === "country") {
-      var firstCountry, secondCountry
+      var firstCountry, secondCountry;
       try {
-        firstCountry = a["birth"]["place"]["countryNow"][lang];
+        firstCountry = a.country;
       } catch {
         return 1;
       }
       try {
-        secondCountry = b["birth"]["place"]["countryNow"][lang];
+        secondCountry = b.country;
       } catch {
         return -1;
       }
