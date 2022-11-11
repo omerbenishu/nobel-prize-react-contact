@@ -1,10 +1,12 @@
 const app = document.getElementById("app");
-const API_PREFIX = "https://api.nobelprize.org/2.1/laureates?limit=40";
+const API_PREFIX = "https://api.nobelprize.org/2.1/laureates?limit=1000";
 var currentQuery = "";
 const titleType = "h3";
 const descType = "p";
 const dataClassName = "data";
 const itemClassName = "item";
+var currentSort = 'Name';
+var currentFilter = 'All';
 var lang = "en";
 
 async function getData() {
@@ -12,15 +14,28 @@ async function getData() {
   return await response.json();
 }
 
+const dataSort = document.getElementById("data-sort");
+
+dataSort.addEventListener("change", async (event) => {
+  console.log("Data Sort Change");
+  console.log(event.target.value);
+  currentSort = event.target.value;
+  const data = await getData();
+  const sortedData = sortData(data, event.target.value);
+  const filteredSortData = filterData(sortedData, currentFilter);
+  await renderUI(filteredSortData);
+});
+
 const dataFilter = document.getElementById("data-filter");
 
 dataFilter.addEventListener("change", async (event) => {
   console.log("Data Filter Change");
   console.log(event.target.value);
-
+  currentFilter = event.target.value;
   const data = await getData();
   const filteredData = filterData(data, event.target.value);
-  await renderUI(filteredData);
+  const filteredSortData = sortData(filteredData, currentSort)
+  await renderUI(filteredSortData);
 });
 
 async function renderUI(data) {
@@ -119,6 +134,38 @@ function filterData(data, key) {
     } else {
       return key === person["nobelPrizes"][0]["category"]["en"];
     }
+  });
+  return data;
+}
+
+function sortData(data, key) {
+  data["laureates"] = data["laureates"].sort((a, b) => {
+    if (key === "name") {
+      try{
+      return a["fullName"][lang] > b["fullName"][lang] ? 1 : -1;
+      }
+      catch {console.log(a); console.log(b)}
+    }
+    if (key === "year") {
+      return a["nobelPrizes"][0]["awardYear"] > b["nobelPrizes"][0]["awardYear"]
+        ? 1
+        : -1;
+    }
+    if (key === "country") {
+      var firstCountry, secondCountry
+      try {
+        firstCountry = a["birth"]["place"]["countryNow"][lang];
+      } catch {
+        return 1;
+      }
+      try {
+        secondCountry = b["birth"]["place"]["countryNow"][lang];
+      } catch {
+        return -1;
+      }
+      return firstCountry > secondCountry ? 1 : -1;
+    }
+    return 0;
   });
   return data;
 }
