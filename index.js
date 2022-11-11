@@ -1,6 +1,6 @@
 const app = document.getElementById("app");
-const API_PREFIX = "https://api.nobelprize.org/2.1/laureates?limit=100";
-let currentQuery = "";
+const API_PREFIX = "https://api.nobelprize.org/2.1/laureates";
+let currentQuery = "?limit=100";
 const titleType = "h3";
 const descType = "p";
 const dataClassName = "data";
@@ -10,6 +10,8 @@ let currentFilter = "All";
 let lang = "en";
 
 async function getData() {
+
+  currentQuery = currentFilter === 'All' ? '?limit=50' : '?limit=400' ;
   const response = await fetch(API_PREFIX + currentQuery);
   const json = await response.json();
   const cleanData = [];
