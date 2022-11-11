@@ -1,6 +1,7 @@
 const app = document.getElementById("app");
 const API_PREFIX = "https://api.nobelprize.org/2.1/laureates";
 let currentQuery = "?limit=100";
+let SHOW_LIM = 50;
 const titleType = "h3";
 const descType = "p";
 const dataClassName = "data";
@@ -10,8 +11,7 @@ let currentFilter = "All";
 let lang = "en";
 
 async function getData() {
-
-  currentQuery = currentFilter === 'All' ? '?limit=50' : '?limit=400' ;
+  currentQuery = currentFilter === "All" ? "?limit=50" : "?limit=400";
   const response = await fetch(API_PREFIX + currentQuery);
   const json = await response.json();
   const cleanData = [];
@@ -31,8 +31,7 @@ async function getData() {
         year: element.nobelPrizes[0].awardYear,
         desc: element.nobelPrizes[0].motivation.en,
       });
-    } catch (err) {
-    }
+    } catch (err) {}
   });
   return cleanData;
 }
@@ -44,7 +43,7 @@ dataSort.addEventListener("change", async (event) => {
   const data = await getData();
   const sortedData = sortData(data, event.target.value);
   const filteredSortData = filterData(sortedData, currentFilter);
-  await renderUI(filteredSortData);
+  await renderUI(filteredSortData.slice(0, SHOW_LIM));
 });
 
 const dataFilter = document.getElementById("data-filter");
@@ -54,7 +53,7 @@ dataFilter.addEventListener("change", async (event) => {
   const data = await getData();
   const filteredData = filterData(data, event.target.value);
   const filteredSortData = sortData(filteredData, currentSort);
-  await renderUI(filteredSortData);
+  await renderUI(filteredSortData.slice(0, SHOW_LIM));
 });
 
 async function renderUI(data) {
@@ -175,4 +174,4 @@ function sortData(data, key) {
 }
 
 const data = await getData();
-await renderUI(data);
+await renderUI(data.slice(0, SHOW_LIM));
