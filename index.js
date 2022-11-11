@@ -12,7 +12,20 @@ async function getData() {
   return await response.json();
 }
 
+const dataFilter = document.getElementById("data-filter");
+
+dataFilter.addEventListener("change", async (event) => {
+  console.log("Data Filter Change");
+  console.log(event.target.value);
+
+  const data = await getData();
+  const filteredData = filterData(data, event.target.value);
+  await renderUI(filteredData);
+});
+
 async function renderUI(data) {
+  clearUI();
+
   var laureatesArray = data["laureates"];
   console.log(laureatesArray.length);
 
@@ -32,7 +45,8 @@ async function renderUI(data) {
       } catch (err) {
         country = "World";
       }
-      t.content.querySelector(".flagImg").title = capitalizeFirstLetter(country);
+      t.content.querySelector(".flagImg").title =
+        capitalizeFirstLetter(country);
 
       country = country.toLowerCase().replace(" ", "-");
       const flagSrc = "./resources/flags/" + country + ".png";
@@ -96,6 +110,17 @@ function imageExists(image_url) {
   http.send();
 
   return http.status != 404;
+}
+
+function filterData(data, key) {
+  data["laureates"] = data["laureates"].filter((person) => {
+    if (key === "All") {
+      return person;
+    } else {
+      return key === person["nobelPrizes"][0]["category"]["en"];
+    }
+  });
+  return data;
 }
 
 const data = await getData();
