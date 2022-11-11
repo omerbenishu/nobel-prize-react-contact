@@ -5,54 +5,71 @@
   <title></title>
   <link rel="stylesheet" href="index.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=NunitoSans">
 </head>
 
 <body>
   <div id="container">
     <div id="main">
       <h1>Data</h1>
-      <div id="app" class="row">
-
-        <!-- Start example showing the css layout -->
-        <div class="item">
-          <div class="data">
-            <h2>Example Heading</h2>
-            <p>Example text.</p>
+      <div class="row">
+        <div class="item meta">
+          <div class="content">
+            <p>This is an app to discover football data.</p>
           </div>
         </div>
-
-        <div class="item">
-          <div class="data">
-            <h2>Example Heading</h2>
-            <p>Example text.</p>
-          </div>
-        </div>
-        <!-- End example showing the css layout -->
-        
-        
-        <template id="item-template">
-          <div class="item">
-            <div class="data">
-              <h3 class="title">
-                <img class="flagImg">
-
-              </h3>
-              <img class="categoryImg">
-              <span class="category"></span>
-              <br>
-              <img class="dateImg">
-              <span class="year"></span>
-              <br>
-              <p class="desc">
-                <img class="infoImg"/>
-              </p>
-
+        <div class="item meta">
+          <div class="row">
+            <div class="item meta">
+              <div class="content">
+                <p>Sort</p>
+                <select id="data-sort">
+                  <option value="name">Name</option>
+                  <option value="year">Year</option>
+                  <option value="country">Country</option>
+                </select>
+              </div>
+            </div>
+            <div class="item meta">
+              <div class="content">
+                <p>Filter</p>
+                <select id="data-filter">
+                  <option value="All">All</option>
+                  <option value="Physics">Physics</option>
+                  <option value="Economic Sciences">Economic Sciences</option>
+                  <option value="Literature">Literature</option>
+                  <option value="Chemistry">Chemistry</option>
+                  <option value="Peace">Peace</option>
+                  <option value="Physiology or Medicine">Physiology or Medicine</option>
+                </select>
               </div>
             </div>
           </div>
-          </template>
+        </div>
       </div>
+      <div id="app" class="row">
+        
+      </div>
+      <template id="item-template">
+        <div class="item">
+          <div class="data">
+            <h3 class="title">
+              <img class="flagImg">
+
+            </h3>
+            <img class="categoryImg">
+            <span class="category"></span>
+            <br>
+            <img class="dateImg">
+            <span class="year"></span>
+            <br>
+            <p class="desc">
+              <img class="infoImg"/>
+            </p>
+
+            </div>
+          </div>
+        </div>
+        </template>
      
     </div>
   </div>

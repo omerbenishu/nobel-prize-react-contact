@@ -123,3 +123,7 @@ br {
   margin-right: 8px;
   vertical-align: middle
 }
+
+.item.meta {
+  flex-basis: 50%;
+}
