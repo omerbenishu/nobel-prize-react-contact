@@ -1,18 +1,18 @@
 const app = document.getElementById("app");
 const API_PREFIX = "https://api.nobelprize.org/2.1/laureates?limit=100";
-var currentQuery = "";
+let currentQuery = "";
 const titleType = "h3";
 const descType = "p";
 const dataClassName = "data";
 const itemClassName = "item";
-var currentSort = "Name";
-var currentFilter = "All";
-var lang = "en";
+let currentSort = "Name";
+let currentFilter = "All";
+let lang = "en";
 
 async function getData() {
   const response = await fetch(API_PREFIX + currentQuery);
   const json = await response.json();
-  var cleanData = [];
+  const cleanData = [];
   json.laureates.forEach((element) => {
     try {
       let eCountry;
@@ -30,7 +30,6 @@ async function getData() {
         desc: element.nobelPrizes[0].motivation.en,
       });
     } catch (err) {
-      console.log(err);
     }
   });
   return cleanData;
@@ -58,11 +57,9 @@ dataFilter.addEventListener("change", async (event) => {
 
 async function renderUI(data) {
   clearUI();
-  console.log(data);
   data.forEach((element) => {
     try {
-      var t = document.querySelector("#item-template").cloneNode(true);
-      //const nobelPrizes = element["nobelPrizes"];
+      const t = document.querySelector("#item-template").cloneNode(true);
 
       t.content.querySelector(".flagImg").title = capitalizeFirstLetter(
         element.country
@@ -124,7 +121,7 @@ function clearUI() {
 }
 
 function imageExists(image_url) {
-  var http = new XMLHttpRequest();
+  const http = new XMLHttpRequest();
 
   http.open("HEAD", image_url, false);
   http.send();
@@ -157,7 +154,7 @@ function sortData(data, key) {
       return a.year > b.year ? 1 : -1;
     }
     if (key === "country") {
-      var firstCountry, secondCountry;
+      let firstCountry, secondCountry;
       try {
         firstCountry = a.country;
       } catch {
