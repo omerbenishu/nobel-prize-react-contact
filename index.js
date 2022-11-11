@@ -11,6 +11,7 @@ let currentFilter = "All";
 let lang = "en";
 
 async function getData() {
+
   currentQuery = currentFilter === "All" ? "?limit=150" : "?limit=400";
   if (currentFilter != "All") {
     currentQuery += `&nobelPrizeCategory=${getCategoryQuery(currentFilter)}`;
@@ -61,6 +62,8 @@ dataFilter.addEventListener("change", async (event) => {
 
 async function renderUI(data) {
   clearUI();
+  document.getElementById("loader").style.display = 'inline'
+
   data.forEach((element) => {
     try {
       const t = document.querySelector("#item-template").cloneNode(true);
@@ -93,6 +96,8 @@ async function renderUI(data) {
       console.log(err);
     }
   });
+  document.getElementById("loader").style.display = 'none'
+
 }
 
 function getCategoryImage(element) {
