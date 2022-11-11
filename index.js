@@ -1,7 +1,7 @@
 const app = document.getElementById("app");
 const API_PREFIX = "https://api.nobelprize.org/2.1/laureates";
 let currentQuery = "?limit=100";
-let SHOW_LIM = 50;
+let SHOW_LIM = 150;
 const titleType = "h3";
 const descType = "p";
 const dataClassName = "data";
@@ -11,7 +11,10 @@ let currentFilter = "All";
 let lang = "en";
 
 async function getData() {
-  currentQuery = currentFilter === "All" ? "?limit=50" : "?limit=400";
+  currentQuery = currentFilter === "All" ? "?limit=150" : "?limit=400";
+  if (currentFilter != "All") {
+    currentQuery += `&nobelPrizeCategory=${getCategoryQuery(currentFilter)}`;
+  }
   const response = await fetch(API_PREFIX + currentQuery);
   const json = await response.json();
   const cleanData = [];
@@ -119,6 +122,24 @@ function clearUI() {
   while (app.firstChild) {
     app.removeChild(app.firstChild);
   }
+}
+
+function getCategoryQuery(category) {
+  switch (category) {
+    case "Physics":
+      return "phy";
+    case "Economic Sciences":
+      return "eco";
+    case "Literature":
+      return "lit";
+    case "Chemistry":
+      return "che";
+    case "Peace":
+      return "pea";
+    case "Physiology or Medicine":
+      return "med";
+    
+     }
 }
 
 function imageExists(image_url) {
