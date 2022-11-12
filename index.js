@@ -6,7 +6,7 @@ const titleType = "h3";
 const descType = "p";
 const dataClassName = "data";
 const itemClassName = "item";
-let currentSort = "Name";
+let currentSort = "name";
 let currentFilter = "All";
 let lang = "en";
 let order = 1;
@@ -39,6 +39,8 @@ async function getData() {
 const dataSort = document.getElementById("data-sort");
 
 dataSort.addEventListener("change", async (event) => {
+  document.getElementById("loaderContainer").style.display = "inline";
+
   currentSort = event.target.value;
   const sortedData = sortData(data, event.target.value);
   const filteredSortData = filterData(sortedData, currentFilter);
@@ -48,6 +50,8 @@ dataSort.addEventListener("change", async (event) => {
 const dataFilter = document.getElementById("data-filter");
 
 dataFilter.addEventListener("change", async (event) => {
+  document.getElementById("loaderContainer").style.display = "inline";
+
   currentFilter = event.target.value;
   const filteredData = filterData(data, event.target.value);
   const filteredSortData = sortData(filteredData, currentSort);
@@ -57,6 +61,8 @@ dataFilter.addEventListener("change", async (event) => {
 const orderButton = document.getElementById("order");
 
 orderButton.addEventListener("click", async () => {
+  document.getElementById("loaderContainer").style.display = "inline";
+
   order *= -1;
   console.log(orderButton.innerHTML)
   if (orderButton.innerHTML === "↑") {
