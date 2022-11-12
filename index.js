@@ -12,9 +12,9 @@ let lang = "en";
 
 async function getData() {
   currentQuery = currentFilter === "All" ? "?limit=981" : "?limit=981";
-  if (currentFilter != "All") {
-    currentQuery += `&nobelPrizeCategory=${getCategoryQuery(currentFilter)}`;
-  }
+  // if (currentFilter != "All") {
+  //   currentQuery += `&nobelPrizeCategory=${getCategoryQuery(currentFilter)}`;
+  // }
   const response = await fetch(API_PREFIX + currentQuery);
   const json = await response.json();
   const cleanData = [];
@@ -52,13 +52,15 @@ const dataFilter = document.getElementById("data-filter");
 
 dataFilter.addEventListener("change", async (event) => {
   currentFilter = event.target.value;
-  const data = await getData();
+  //const data = await getData();
   const filteredData = filterData(data, event.target.value);
   const filteredSortData = sortData(filteredData, currentSort);
   await renderUI(filteredSortData.slice(0, SHOW_LIM));
 });
 
 async function renderUI(data) {
+  console.log("entered")
+
   clearUI();
   document.getElementById("loaderContainer").style.display = "inline";
 
@@ -152,14 +154,14 @@ function imageExists(image_url) {
 }
 
 function filterData(data, key) {
-  data = data.filter((person) => {
+  const filteredData = data.filter((person) => {
     if (key === "All") {
       return person;
     } else {
       return key === person.category;
     }
   });
-  return data;
+  return filteredData;
 }
 
 function sortData(data, key) {
