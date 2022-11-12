@@ -135,7 +135,8 @@ br {
   width: 120px;
   height: 120px;
   animation: spin 2s linear infinite;
-
+  margin-left: 40%;
+  margin-top: 20%;
 }
 
 @keyframes spin {
@@ -145,4 +146,10 @@ br {
   100% {
     transform: rotate(360deg);
   }
+}
+
+#loadingText{
+  text-align: center;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+
 }

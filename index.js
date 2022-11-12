@@ -62,7 +62,7 @@ dataFilter.addEventListener("change", async (event) => {
 
 async function renderUI(data) {
   clearUI();
-  document.getElementById("loader").style.display = 'inline'
+  document.getElementById("loaderContainer").style.display = 'inline'
 
   data.forEach((element) => {
     try {
@@ -96,7 +96,7 @@ async function renderUI(data) {
       console.log(err);
     }
   });
-  document.getElementById("loader").style.display = 'none'
+  document.getElementById("loaderContainer").style.display = 'none'
 
 }
 
