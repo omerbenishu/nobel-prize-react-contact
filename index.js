@@ -214,7 +214,7 @@ function sortData(data, key) {
   });
   return data;
 }
-
+console.log("start")
 const data = await getData();
 await renderUI(data.slice(0, SHOW_LIM));
 document.getElementById("loaderContainer").style.display = "none";

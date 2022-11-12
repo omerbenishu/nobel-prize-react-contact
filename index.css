@@ -147,11 +147,11 @@ br {
 }
 
 #miniLoader {
-  border: 1px solid #f3f3f3;
-  border-top: 1px solid #3498db;
+  border: 10px solid #f3f3f3;
+  border-top: 10px solid #3498db;
   border-radius: 50%;
-  width: 5px;
-  height: 5px;
+  width: 50px;
+  height: 50px;
   animation: spin 2s linear infinite;
 }
 
