@@ -9,6 +9,7 @@ const itemClassName = "item";
 let currentSort = "Name";
 let currentFilter = "All";
 let lang = "en";
+let order = 1;
 
 async function getData() {
   const response = await fetch(API_PREFIX + currentQuery);
@@ -53,9 +54,24 @@ dataFilter.addEventListener("change", async (event) => {
   await renderUI(filteredSortData.slice(0, SHOW_LIM));
 });
 
-async function renderUI(data) {
-  console.log("entered")
+const orderButton = document.getElementById("order");
 
+orderButton.addEventListener("click", async () => {
+  order *= -1;
+  console.log(orderButton.innerHTML)
+  if (orderButton.innerHTML === "↑") {
+    orderButton.innerHTML = "↓";
+  } else {
+    orderButton.innerHTML = "↑";
+  }
+
+  const filteredData = filterData(data, currentFilter);
+  const filteredSortData = sortData(filteredData, currentSort);
+  await renderUI(filteredSortData.slice(0, SHOW_LIM));
+});
+
+
+async function renderUI(data) {
   clearUI();
   document.getElementById("loaderContainer").style.display = "inline";
 
@@ -63,25 +79,25 @@ async function renderUI(data) {
     try {
       const t = document.querySelector("#item-template").cloneNode(true);
 
-      // t.content.querySelector(".flagImg").title = capitalizeFirstLetter(
-      //   element.country
-      // );
+      t.content.querySelector(".flagImg").title = capitalizeFirstLetter(
+        element.country
+      );
 
-      // const country = element.country.toLowerCase().replace(" ", "-");
-      // const flagSrc = "./resources/flags/" + country + ".svg";
-      // if (imageExists(flagSrc))
-      //   t.content.querySelector(".flagImg").src =
-      //     "./resources/flags/" + country + ".svg";
-      // else {
-      //   t.content.querySelector(".flagImg").src = "./resources/flags/world.svg";
-      // }
+      const country = element.country.toLowerCase().replace(" ", "-");
+      const flagSrc = "./resources/flags/" + country + ".svg";
+      if (imageExists(flagSrc))
+        t.content.querySelector(".flagImg").src =
+          "./resources/flags/" + country + ".svg";
+      else {
+        t.content.querySelector(".flagImg").src = "./resources/flags/world.svg";
+      }
       t.content.querySelector(titleType).innerHTML += element.name;
-      // t.content.querySelector(".categoryImg").title = element.category;
-      // t.content.querySelector(".categoryImg").src = getCategoryImage(element);
+      t.content.querySelector(".categoryImg").title = element.category;
+      t.content.querySelector(".categoryImg").src = getCategoryImage(element);
       t.content.querySelector(".category").innerHTML = element.category;
-      // t.content.querySelector(".dateImg").src = "./resources/calendarIcon.png";
+      t.content.querySelector(".dateImg").src = "./resources/calendarIcon.png";
       t.content.querySelector(".year").innerHTML = element.year;
-      // t.content.querySelector(".infoImg").src = "./resources/idea.png";
+      t.content.querySelector(".infoImg").src = "./resources/idea.png";
       t.content.querySelector(".desc").innerHTML += capitalizeFirstLetter(
         element.desc
       );
@@ -119,7 +135,6 @@ function capitalizeFirstLetter(string) {
 
 function clearUI() {
   app.replaceChildren();
-
 }
 
 function getCategoryQuery(category) {
@@ -148,6 +163,8 @@ function imageExists(image_url) {
   return http.status != 404;
 }
 
+
+
 function filterData(data, key) {
   const filteredData = data.filter((person) => {
     if (key === "All") {
@@ -163,28 +180,28 @@ function sortData(data, key) {
   data = data.sort((a, b) => {
     if (key === "name") {
       try {
-        return a.name > b.name ? 1 : -1;
+        return a.name > b.name ? 1 * order : -1 * order;
       } catch {
         console.log(a);
         console.log(b);
       }
     }
     if (key === "year") {
-      return a.year > b.year ? 1 : -1;
+      return a.year > b.year ? 1 * order : -1 * order;
     }
     if (key === "country") {
       let firstCountry, secondCountry;
       try {
         firstCountry = a.country;
       } catch {
-        return 1;
+        return 1 * order;
       }
       try {
         secondCountry = b.country;
       } catch {
-        return -1;
+        return -1 * order;
       }
-      return firstCountry > secondCountry ? 1 : -1;
+      return firstCountry > secondCountry ? 1 * order : -1 * order;
     }
     return 0;
   });
