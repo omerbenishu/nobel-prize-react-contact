@@ -166,4 +166,16 @@ h1 {
   font-weight: bold;
 }
 
+select { 
+  font-family: "Arvo";
+  margin-right: 30px;
+  margin-bottom: 10px;
+}
+
+label {
+  font-family: "Arvo";
+  margin-right: 5px;
+  margin-bottom: 10px;
+
+}
 
