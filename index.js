@@ -11,7 +11,6 @@ let currentFilter = "All";
 let lang = "en";
 
 async function getData() {
-
   currentQuery = currentFilter === "All" ? "?limit=150" : "?limit=400";
   if (currentFilter != "All") {
     currentQuery += `&nobelPrizeCategory=${getCategoryQuery(currentFilter)}`;
@@ -62,7 +61,7 @@ dataFilter.addEventListener("change", async (event) => {
 
 async function renderUI(data) {
   clearUI();
-  document.getElementById("loaderContainer").style.display = 'inline'
+  document.getElementById("loaderContainer").style.display = "inline";
 
   data.forEach((element) => {
     try {
@@ -96,8 +95,7 @@ async function renderUI(data) {
       console.log(err);
     }
   });
-  document.getElementById("loaderContainer").style.display = 'none'
-
+  document.getElementById("loaderContainer").style.display = "none";
 }
 
 function getCategoryImage(element) {
@@ -144,8 +142,7 @@ function getCategoryQuery(category) {
       return "pea";
     case "Physiology or Medicine":
       return "med";
-    
-     }
+  }
 }
 
 function imageExists(image_url) {
@@ -199,7 +196,6 @@ function sortData(data, key) {
   });
   return data;
 }
-
 
 const data = await getData();
 await renderUI(data.slice(0, SHOW_LIM));

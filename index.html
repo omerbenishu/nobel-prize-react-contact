@@ -4,34 +4,25 @@
   <meta charset=utf-8>
   <title></title>
   <link rel="stylesheet" href="index.css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Arvo">
 </head>
 
 <body>
   <div id="container">
     <div id="main">
-      <h1>Nobel winners</h1>
-      <div class="row">
-        <div class="item meta">
-          <div class="content">
-            <p>Dicover about the nobel what you didn't know</p>
-          </div>
-        </div>
-        <div class="item meta">
-          <div class="row">
-            <div class="item meta">
-              <div class="content">
-                <p>Sort</p>
-                <select id="data-sort">
-                  <option value="name">Name</option>
-                  <option value="year">Year</option>
-                  <option value="country">Country</option>
-                </select>
-              </div>
-            </div>
-            <div class="item meta">
-              <div class="content">
-                <p>Filter</p>
+      <h1>
+        <img id="nobel" src="https://www.kindpng.com/picc/m/77-771594_group-search-results-brainpop-nobel-peace-prize-icon.png">
+        Nobel prize laureates
+      </h1>
+      <label for="data-sort">
+        Sort
+      </label>
+      <select id="data-sort">
+        <option value="name">Name</option>
+        <option value="year">Year</option>
+        <option value="country">Country</option>
+      </select>
+      <p>Filter</p>
                 <select id="data-filter">
                   <option value="All">All</option>
                   <option value="Physics">Physics</option>
@@ -41,11 +32,6 @@
                   <option value="Peace">Peace</option>
                   <option value="Physiology or Medicine">Physiology or Medicine</option>
                 </select>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       <div id="loaderContainer">
         <div id="loader"></div>
         <p id="loadingText">
