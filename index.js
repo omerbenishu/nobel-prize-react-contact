@@ -73,12 +73,12 @@ async function renderUI(data) {
       );
 
       const country = element.country.toLowerCase().replace(" ", "-");
-      const flagSrc = "./resources/flags/" + country + ".png";
+      const flagSrc = "./resources/flags/" + country + ".svg";
       if (imageExists(flagSrc))
         t.content.querySelector(".flagImg").src =
-          "./resources/flags/" + country + ".png";
+          "./resources/flags/" + country + ".svg";
       else {
-        t.content.querySelector(".flagImg").src = "./resources/flags/world.png";
+        t.content.querySelector(".flagImg").src = "./resources/flags/world.svg";
       }
       t.content.querySelector(titleType).innerHTML += element.name;
       t.content.querySelector(".categoryImg").title = element.category;
@@ -124,9 +124,10 @@ function capitalizeFirstLetter(string) {
 }
 
 function clearUI() {
-  while (app.firstChild) {
-    app.removeChild(app.firstChild);
-  }
+  app.replaceChildren();
+  // while (app.firstChild) {
+  //   app.removeChild(app.firstChild);
+  // }
 }
 
 function getCategoryQuery(category) {
@@ -198,6 +199,7 @@ function sortData(data, key) {
   });
   return data;
 }
+
 
 const data = await getData();
 await renderUI(data.slice(0, SHOW_LIM));
