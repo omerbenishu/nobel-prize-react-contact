@@ -39,32 +39,35 @@ async function getData() {
 const dataSort = document.getElementById("data-sort");
 
 dataSort.addEventListener("change", async (event) => {
-  document.getElementById("loaderContainer").style.display = "inline";
+  document.getElementById("loader").style.display = "block";
 
   currentSort = event.target.value;
   const sortedData = sortData(data, event.target.value);
   const filteredSortData = filterData(sortedData, currentFilter);
   await renderUI(filteredSortData.slice(0, SHOW_LIM));
+  document.getElementById("loader").style.display = "none";
+
 });
 
 const dataFilter = document.getElementById("data-filter");
 
 dataFilter.addEventListener("change", async (event) => {
-  document.getElementById("loaderContainer").style.display = "inline";
+  document.getElementById("loader").style.display = "block";
 
   currentFilter = event.target.value;
   const filteredData = filterData(data, event.target.value);
   const filteredSortData = sortData(filteredData, currentSort);
   await renderUI(filteredSortData.slice(0, SHOW_LIM));
+  document.getElementById("loader").style.display = "none";
 });
 
 const orderButton = document.getElementById("order");
 
 orderButton.addEventListener("click", async () => {
-  document.getElementById("loaderContainer").style.display = "inline";
+  document.getElementById("loader").style.display = "block";
 
   order *= -1;
-  console.log(orderButton.innerHTML)
+  console.log(orderButton.innerHTML);
   if (orderButton.innerHTML === "↑") {
     orderButton.innerHTML = "↓";
   } else {
@@ -76,10 +79,8 @@ orderButton.addEventListener("click", async () => {
   await renderUI(filteredSortData.slice(0, SHOW_LIM));
 });
 
-
 async function renderUI(data) {
   clearUI();
-  document.getElementById("loaderContainer").style.display = "inline";
 
   data.forEach((element) => {
     try {
@@ -113,7 +114,7 @@ async function renderUI(data) {
       console.log(err);
     }
   });
-  document.getElementById("loaderContainer").style.display = "none";
+  //document.getElementById("loaderContainer").style.display = "none";
 }
 
 function getCategoryImage(element) {
@@ -169,8 +170,6 @@ function imageExists(image_url) {
   return http.status != 404;
 }
 
-
-
 function filterData(data, key) {
   const filteredData = data.filter((person) => {
     if (key === "All") {
@@ -216,3 +215,4 @@ function sortData(data, key) {
 
 const data = await getData();
 await renderUI(data.slice(0, SHOW_LIM));
+document.getElementById("loaderContainer").style.display = "none";
