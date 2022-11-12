@@ -66,25 +66,25 @@ async function renderUI(data) {
     try {
       const t = document.querySelector("#item-template").cloneNode(true);
 
-      t.content.querySelector(".flagImg").title = capitalizeFirstLetter(
-        element.country
-      );
+      // t.content.querySelector(".flagImg").title = capitalizeFirstLetter(
+      //   element.country
+      // );
 
-      const country = element.country.toLowerCase().replace(" ", "-");
-      const flagSrc = "./resources/flags/" + country + ".svg";
-      if (imageExists(flagSrc))
-        t.content.querySelector(".flagImg").src =
-          "./resources/flags/" + country + ".svg";
-      else {
-        t.content.querySelector(".flagImg").src = "./resources/flags/world.svg";
-      }
+      // const country = element.country.toLowerCase().replace(" ", "-");
+      // const flagSrc = "./resources/flags/" + country + ".svg";
+      // if (imageExists(flagSrc))
+      //   t.content.querySelector(".flagImg").src =
+      //     "./resources/flags/" + country + ".svg";
+      // else {
+      //   t.content.querySelector(".flagImg").src = "./resources/flags/world.svg";
+      // }
       t.content.querySelector(titleType).innerHTML += element.name;
-      t.content.querySelector(".categoryImg").title = element.category;
-      t.content.querySelector(".categoryImg").src = getCategoryImage(element);
+      // t.content.querySelector(".categoryImg").title = element.category;
+      // t.content.querySelector(".categoryImg").src = getCategoryImage(element);
       t.content.querySelector(".category").innerHTML = element.category;
-      t.content.querySelector(".dateImg").src = "./resources/calendarIcon.png";
+      // t.content.querySelector(".dateImg").src = "./resources/calendarIcon.png";
       t.content.querySelector(".year").innerHTML = element.year;
-      t.content.querySelector(".infoImg").src = "./resources/idea.png";
+      // t.content.querySelector(".infoImg").src = "./resources/idea.png";
       t.content.querySelector(".desc").innerHTML += capitalizeFirstLetter(
         element.desc
       );
