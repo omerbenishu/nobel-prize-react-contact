@@ -46,13 +46,12 @@ dataSort.addEventListener("change", async (event) => {
   const filteredSortData = filterData(sortedData, currentFilter);
   await renderUI(filteredSortData.slice(0, SHOW_LIM));
   document.getElementById("miniLoader").style.display = "none";
-
 });
 
 const dataFilter = document.getElementById("data-filter");
 
 dataFilter.addEventListener("change", async (event) => {
-  console.log("changed")
+  console.log("changed");
   document.getElementById("miniLoader").style.display = "block";
 
   currentFilter = event.target.value;
@@ -79,50 +78,37 @@ orderButton.addEventListener("click", async () => {
   const filteredSortData = sortData(filteredData, currentSort);
   await renderUI(filteredSortData.slice(0, SHOW_LIM));
   document.getElementById("miniLoader").style.display = "none";
-
 });
 
 orderButton.addEventListener("mousedown", () => {
-  console.log("input")
   document.getElementById("miniLoader").style.display = "inline-block";
 });
 
-dataFilter.addEventListener("input", () => {
-  console.log("input")
-
+dataFilter.addEventListener("mousedown", () => {
   document.getElementById("miniLoader").style.display = "inline-block";
 });
-dataSort.addEventListener("input", () => {
-  console.log("input")
-
+dataSort.addEventListener("mousedown", () => {
   document.getElementById("miniLoader").style.display = "inline-block";
 });
 
-// orderButton.addEventListener("focusout", () => {
-//   document.getElementById("miniLoader").style.display = "none";
-// });
+orderButton.addEventListener("focusout", () => {
+  document.getElementById("miniLoader").style.display = "none";
+});
 
-// dataFilter.addEventListener("focusout", () => {
-//   document.getElementById("miniLoader").style.display = "none";
-// });
-// dataSort.addEventListener("focusout", () => {
-//   document.getElementById("miniLoader").style.display = "none";
-// });
+dataFilter.addEventListener("focusout", () => {
+  document.getElementById("miniLoader").style.display = "none";
+});
+dataSort.addEventListener("focusout", () => {
+  document.getElementById("miniLoader").style.display = "none";
+});
 
-// dataFilter.addEventListener("close", () => {
-//   document.getElementById("miniLoader").style.display = "none";
-// });
-// dataSort.addEventListener("close", () => {
-//   document.getElementById("miniLoader").style.display = "none";
-// });
-
-// document.body.addEventListener('mousemove', (event) => {
-// console.log(event.target)
-// if(event.target.id === 'data-filter' ||event.target.id === 'data-sort'){
-//   return
-// }
-//   document.getElementById("miniLoader").style.display = "none";
-// }); 
+document.body.addEventListener("mousemove", (event) => {
+  if (event.target.id === "data-filter" || event.target.id === "data-sort") {
+    return;
+  }
+  dataSort.blur();
+  dataFilter.blur();
+});
 
 async function renderUI(data) {
   clearUI();
@@ -257,7 +243,7 @@ function sortData(data, key) {
   });
   return data;
 }
-console.log("start")
+console.log("start");
 document.getElementById("miniLoader").style.display = "none";
 const data = await getData();
 await renderUI(data.slice(0, SHOW_LIM));
