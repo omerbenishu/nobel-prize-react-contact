@@ -39,32 +39,32 @@ async function getData() {
 const dataSort = document.getElementById("data-sort");
 
 dataSort.addEventListener("change", async (event) => {
-  document.getElementById("loader").style.display = "block";
+  document.getElementById("miniLoader").style.display = "block";
 
   currentSort = event.target.value;
   const sortedData = sortData(data, event.target.value);
   const filteredSortData = filterData(sortedData, currentFilter);
   await renderUI(filteredSortData.slice(0, SHOW_LIM));
-  document.getElementById("loader").style.display = "none";
+  document.getElementById("miniLoader").style.display = "none";
 
 });
 
 const dataFilter = document.getElementById("data-filter");
 
 dataFilter.addEventListener("change", async (event) => {
-  document.getElementById("loader").style.display = "block";
+  document.getElementById("miniLoader").style.display = "block";
 
   currentFilter = event.target.value;
   const filteredData = filterData(data, event.target.value);
   const filteredSortData = sortData(filteredData, currentSort);
   await renderUI(filteredSortData.slice(0, SHOW_LIM));
-  document.getElementById("loader").style.display = "none";
+  document.getElementById("miniLoader").style.display = "none";
 });
 
 const orderButton = document.getElementById("order");
 
 orderButton.addEventListener("click", async () => {
-  document.getElementById("loader").style.display = "block";
+  document.getElementById("miniLoader").style.display = "block";
 
   order *= -1;
   console.log(orderButton.innerHTML);
@@ -77,6 +77,8 @@ orderButton.addEventListener("click", async () => {
   const filteredData = filterData(data, currentFilter);
   const filteredSortData = sortData(filteredData, currentSort);
   await renderUI(filteredSortData.slice(0, SHOW_LIM));
+  document.getElementById("miniLoader").style.display = "none";
+
 });
 
 async function renderUI(data) {
@@ -216,3 +218,4 @@ function sortData(data, key) {
 const data = await getData();
 await renderUI(data.slice(0, SHOW_LIM));
 document.getElementById("loaderContainer").style.display = "none";
+document.getElementById("miniLoader").style.display = "none";
