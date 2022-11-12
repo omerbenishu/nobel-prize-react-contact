@@ -1,6 +1,6 @@
 const app = document.getElementById("app");
 const API_PREFIX = "https://api.nobelprize.org/2.1/laureates";
-let currentQuery = "?limit=100";
+let currentQuery = "?limit=981";
 let SHOW_LIM = 150;
 const titleType = "h3";
 const descType = "p";
@@ -11,10 +11,6 @@ let currentFilter = "All";
 let lang = "en";
 
 async function getData() {
-  currentQuery = currentFilter === "All" ? "?limit=981" : "?limit=981";
-  // if (currentFilter != "All") {
-  //   currentQuery += `&nobelPrizeCategory=${getCategoryQuery(currentFilter)}`;
-  // }
   const response = await fetch(API_PREFIX + currentQuery);
   const json = await response.json();
   const cleanData = [];
@@ -52,7 +48,6 @@ const dataFilter = document.getElementById("data-filter");
 
 dataFilter.addEventListener("change", async (event) => {
   currentFilter = event.target.value;
-  //const data = await getData();
   const filteredData = filterData(data, event.target.value);
   const filteredSortData = sortData(filteredData, currentSort);
   await renderUI(filteredSortData.slice(0, SHOW_LIM));
