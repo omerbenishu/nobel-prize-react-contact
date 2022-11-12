@@ -11,7 +11,7 @@ let currentFilter = "All";
 let lang = "en";
 
 async function getData() {
-  currentQuery = currentFilter === "All" ? "?limit=150" : "?limit=400";
+  currentQuery = currentFilter === "All" ? "?limit=981" : "?limit=981";
   if (currentFilter != "All") {
     currentQuery += `&nobelPrizeCategory=${getCategoryQuery(currentFilter)}`;
   }
@@ -43,7 +43,6 @@ const dataSort = document.getElementById("data-sort");
 
 dataSort.addEventListener("change", async (event) => {
   currentSort = event.target.value;
-  const data = await getData();
   const sortedData = sortData(data, event.target.value);
   const filteredSortData = filterData(sortedData, currentFilter);
   await renderUI(filteredSortData.slice(0, SHOW_LIM));
@@ -123,9 +122,7 @@ function capitalizeFirstLetter(string) {
 
 function clearUI() {
   app.replaceChildren();
-  // while (app.firstChild) {
-  //   app.removeChild(app.firstChild);
-  // }
+
 }
 
 function getCategoryQuery(category) {
