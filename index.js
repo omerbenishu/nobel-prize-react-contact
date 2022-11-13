@@ -145,7 +145,6 @@ async function renderUI(data) {
       console.log(err);
     }
   });
-  //document.getElementById("loaderContainer").style.display = "none";
 }
 
 function getCategoryImage(element) {
