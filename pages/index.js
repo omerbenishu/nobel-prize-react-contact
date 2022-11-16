@@ -11,6 +11,8 @@ let currentFilter = "All";
 let lang = "en";
 let order = 1;
 
+
+
 async function getData() {
   const response = await fetch(API_PREFIX + currentQuery);
   const json = await response.json();
@@ -174,22 +176,6 @@ function clearUI() {
   app.replaceChildren();
 }
 
-function getCategoryQuery(category) {
-  switch (category) {
-    case "Physics":
-      return "phy";
-    case "Economic Sciences":
-      return "eco";
-    case "Literature":
-      return "lit";
-    case "Chemistry":
-      return "che";
-    case "Peace":
-      return "pea";
-    case "Physiology or Medicine":
-      return "med";
-  }
-}
 
 function imageExists(image_url) {
   const http = new XMLHttpRequest();
@@ -200,50 +186,24 @@ function imageExists(image_url) {
   return http.status != 404;
 }
 
-function filterData(data, key) {
-  const filteredData = data.filter((person) => {
-    if (key === "All") {
-      return person;
-    } else {
-      return key === person.category;
-    }
-  });
-  return filteredData;
-}
-
-function sortData(data, key) {
-  data = data.sort((a, b) => {
-    if (key === "name") {
-      try {
-        return a.name > b.name ? 1 * order : -1 * order;
-      } catch {
-        console.log(a);
-        console.log(b);
-      }
-    }
-    if (key === "year") {
-      return a.year > b.year ? 1 * order : -1 * order;
-    }
-    if (key === "country") {
-      let firstCountry, secondCountry;
-      try {
-        firstCountry = a.country;
-      } catch {
-        return 1 * order;
-      }
-      try {
-        secondCountry = b.country;
-      } catch {
-        return -1 * order;
-      }
-      return firstCountry > secondCountry ? 1 * order : -1 * order;
-    }
-    return 0;
-  });
-  return data;
-}
 console.log("start");
 document.getElementById("miniLoader").style.display = "none";
 const data = await getData();
 await renderUI(data.slice(0, SHOW_LIM));
 document.getElementById("loaderContainer").style.display = "none";
+
+
+
+// *************** React Refactoring ******************
+import { useState } from "react";
+import DataIntro from "../components/data-intro";
+import Message from "../components/message";
+import RecordList from "../components/record-list";
+import { useTeamData } from "../hooks/data";
+import { filterTeamData, sortTeamData } from "../utils";
+
+export default function IndexPage() {
+  const { data, isLoading, isError } = useLaurentsData();
+
+
+}
