@@ -3,11 +3,7 @@ export default function Footer() {
     <footer id="footer">
       <div className="container">
         <div className="row">
-          <div className="item">
-            <div className="content">
-              &copy; 2022 Paul&apos;s Football Company
-            </div>
-          </div>
+              &copy; 2022 Omer Benishu, credits for flag icons are for iconplanet and the rest for flaticon
         </div>
       </div>
     </footer>

@@ -1,10 +1,7 @@
 export default function DataIntro({ changeHandler }) {
   return (
     <div id="main">
-      <h1>
-        <img id="nobel" src="https://www.kindpng.com/picc/m/77-771594_group-search-results-brainpop-nobel-peace-prize-icon.png"/>
-        Nobel prize laureates
-      </h1>
+      
       <div id="meta-row">
         <label htmlFor="data-sort">
           Sort by

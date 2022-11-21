@@ -11,8 +11,6 @@
 // let lang = "en";
 // let order = 1;
 
-
-
 // async function getData() {
 //   const response = await fetch(API_PREFIX + currentQuery);
 //   const json = await response.json();
@@ -176,7 +174,6 @@
 //   app.replaceChildren();
 // }
 
-
 // function imageExists(image_url) {
 //   const http = new XMLHttpRequest();
 
@@ -192,8 +189,6 @@
 // await renderUI(data.slice(0, SHOW_LIM));
 // document.getElementById("loaderContainer").style.display = "none";
 
-
-
 // *************** React Refactoring ******************
 import { useState } from "react";
 import DataIntro from "../components/data-intro";
@@ -202,6 +197,7 @@ import Message from "../components/message";
 import RecordList from "../components/record-list";
 import { useLaureatesData } from "../hooks/data";
 import { filterData, sortData, cleanData } from "../utils";
+import { SHOW_LIM } from "../config";
 
 export default function IndexPage() {
   const { data, isLoading, isError } = useLaureatesData();
@@ -217,31 +213,29 @@ export default function IndexPage() {
     if (event.target.id === "data-filter") {
       setFilterKey(event.target.value);
     }
-    if (event.target.id === "order"){
-      if (orederKey === 1){
-        event.target.innerHTML = "↑"
-        setOrderKey(-1)
-      }
-      else{
-        event.target.innerHTML = "↓"
-        setOrderKey(1)
+    if (event.target.id === "order") {
+      if (orederKey === 1) {
+        event.target.innerHTML = "↑";
+        setOrderKey(-1);
+      } else {
+        event.target.innerHTML = "↓";
+        setOrderKey(1);
       }
     }
   }
-  
 
+  if (isLoading) return <Loading />;
+  if (isError) return <Message content="An error occured..." />;
+  if (!data) return <Loading />;
 
-  if (isLoading) return <Loading />
-  if (isError) return <Message content="An error occured..." />
-  if (!data) return <Loading/>
-  //console.log("again")
-  let laureates = cleanData(data)
+  let laureates = cleanData(data);
   laureates = filterData(sortData(laureates, sortKey, orederKey), filterKey);
+  laureates = laureates.slice(0, SHOW_LIM);
 
   return (
     <>
       <DataIntro changeHandler={getDataQueryKeys} />
       <RecordList records={laureates} />
     </>
-  )
+  );
 }

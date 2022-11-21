@@ -1,4 +1,4 @@
-export default function Loading({ content }) {
+export default function Loading() {
   return (
     <div id="loaderContainer">
       <div id="loader"></div>

@@ -3,6 +3,8 @@
 /* !!!!!!!!!!!!!!!!!!!! */
 
 /* These are provided here to give you a minimum starting point for a layout */
+@import url("https://fonts.googleapis.com/css?family=Roboto|Arvo");
+
 
 #container {
   width: 100%;
@@ -167,6 +169,8 @@ br {
   text-align: justify;
   text-align-last: center;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
 h1 {
