@@ -1,70 +1,92 @@
 import Image from "next/image";
-import { FLAGS_PATH,RESOURCES_LOCAL_BASE } from "../config";
-import { useGameData } from "../hooks/data";
-import { makeGamesStats } from "../utils";
-import RecordStatsRow from "./record-stats-row";
+
+
+
+function importAll(r) {
+  let images = {};
+  r.keys().forEach((item, index) => {
+    images[item.replace("./", "")] = r(item);
+  });
+  return images;
+}
+const images = importAll(
+  require.context("../resources", false, /\.(png|jpe?g|svg)$/)
+);
+const flags = importAll(
+  require.context("../resources/flags", false, /\.(png|jpe?g|svg)$/)
+);
+
+function getCountryImage(country) {
+  let curCountry = country.toLowerCase().replace(" ", "-");
+  curCountry = curCountry + ".svg";
+  console.log(curCountry);
+  if (flags[curCountry] != null) {
+    return curCountry;
+  } else {
+    return "world.svg";
+  }
+}
+
+function getCategoryImage(category) {
+  switch (category) {
+    case "Physics":
+      return "physicsIcon.png";
+    case "Economic Sciences":
+      return "economicIcon.png";
+    case "Literature":
+      return "literatureIcon.png";
+    case "Chemistry":
+      return "chemistryIcon.png";
+    case "Peace":
+      return "peaceIcon.png";
+    case "Physiology or Medicine":
+      return "medIcon.png";
+    default:
+      return "medIcon.png";
+  }
+}
 
 export default function Record({ record }) {
-  const { data: data2022, isLoading: loading2022, isError: isError2022 } = useGameData(2022);
-  const { data: data2021, isLoading: loading2021, isError: isError2021 } = useGameData(2021);
-
-  const stats2022 = makeGamesStats(record.id, 2022, data2022);
-  const stats2021 = makeGamesStats(record.id, 2021, data2021);
-
-  getFlagSrc = (country) => {
-  const src = `${FLAGS_PATH}${country.toLowerCase().replace(" ", "-")}.svg`
-  if (imageExists(src)){
-    return src;
-  }
-  return `${FLAGS_PATH}/world.svg`
-  }
-
-  imageExists = (image_url) => {
-    const http = new XMLHttpRequest();
-  
-    http.open("HEAD", image_url, false);
-    http.send();
-  
-    return http.status != 404;
-  }
-
-   getCategoryImage = (category) => {
-    switch (category) {
-      case "Physics":
-        return "./resources/physicsIcon.png";
-      case "Economic Sciences":
-        return "./resources/economicIcon.png";
-      case "Literature":
-        return "./resources/literatureIcon.png";
-      case "Chemistry":
-        return "./resources/chemistryIcon.png";
-      case "Peace":
-        return "./resources/peaceIcon.png";
-      case "Physiology or Medicine":
-        return "./resources/medIcon.png";
-      default:
-        return "./resources/medIcon.png";
-    }
-  }
-
   return (
-  <div class="item">
-    <div class="data">
-      <h3 class="title">
-        <Image class="flagImg" title={`${record.country}`} src={getFlagSrc(record.country)}/>
-        {record.name}
-      </h3>
-      <Image class="categoryImg" title={record.category} src={getCategoryImage(record.category)}/>
-      <span class="category">{record.category}</span>
-      <br/>
-      <Image class="dateImg" src={`${RESOURCES_LOCAL_BASE}/calendarIcon.svg`}/>
-      <span class="year">{record.year}</span>
-      <br/>
-      <p class="desc">
-        <Image class="infoImg" src={`${RESOURCES_LOCAL_BASE}/idea.png`}/>
-        {record.desc}
-      </p>
+    <div className="item">
+      <div className="data">
+        <h3 className="title">
+          <Image
+            className="flagImg"
+            width="100"
+            height="100"
+            title={`${record.country}`}
+            src={flags[`${getCountryImage(record.country)}`]}
+          />
+          {record.name}
+        </h3>
+        <Image
+          className="categoryImg"
+          width="100"
+          height="100"
+          title={record.category}
+          src={images[getCategoryImage(record.category)]}
+        />
+        <span className="category">{record.category}</span>
+        <br />
+        <Image
+          className="dateImg"
+          width="100"
+          height="100"
+          src={images["calendarIcon.png"]}
+        />
+        <span className="year">{record.year}</span>
+        <br />
+        <p className="desc">
+          <Image
+            className="infoImg"
+            width="100"
+            height="100"
+            src={images["idea.png"]}
+          />
+          {record.desc}
+        </p>
       </div>
     </div>
-  )
+  );
 }
