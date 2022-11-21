@@ -1,10 +1,10 @@
-import Record from "./record";
+import Laureate from "./laureate";
 
-export default function RecordList({ records }) {
+export default function RecordList({ laureates }) {
   return (
     <div id="app" className="row">
-      {records.map(record => {
-        return <Record key={record.name} record={record} />
+      {laureates.map(laureate => {
+        return <Laureate key={laureate.name} laureate={laureate} />
       })}
     </div>
   )

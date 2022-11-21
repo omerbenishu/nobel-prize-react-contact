@@ -45,7 +45,7 @@ function getCategoryImage(category) {
   }
 }
 
-export default function Record({ record }) {
+export default function Laureate({ laureate }) {
   return (
     <div className="item">
       <div className="data">
@@ -54,21 +54,21 @@ export default function Record({ record }) {
             className="flagImg"
             width="100"
             height="100"
-            title={`${record.country}`}
-            alt={`${record.country}`}
-            src={flags[`${getCountryImage(record.country)}`]}
+            title={`${laureate.country}`}
+            alt={`${laureate.country}`}
+            src={flags[`${getCountryImage(laureate.country)}`]}
           />
-          {record.name}
+          {laureate.name}
         </h3>
         <Image
           className="categoryImg"
           width="100"
           height="100"
-          title={record.category}
-          alt={record.category}
-          src={images[getCategoryImage(record.category)]}
+          title={laureate.category}
+          alt={laureate.category}
+          src={images[getCategoryImage(laureate.category)]}
         />
-        <span className="category">{record.category}</span>
+        <span className="category">{laureate.category}</span>
         <br />
         <Image
           className="dateImg"
@@ -77,7 +77,7 @@ export default function Record({ record }) {
           src={images["calendarIcon.png"]}
           alt="Date"
         />
-        <span className="year">{record.year}</span>
+        <span className="year">{laureate.year}</span>
         <br />
         <p className="desc">
           <Image
@@ -87,7 +87,7 @@ export default function Record({ record }) {
             src={images["idea.png"]}
             alt="Info"
           />
-          {record.desc}
+          {laureate.desc}
         </p>
       </div>
     </div>
