@@ -194,7 +194,7 @@ import { useState } from "react";
 import DataIntro from "../components/data-intro";
 import Loading from "../components/loading";
 import Message from "../components/message";
-import RecordList from "../components/record-list";
+import LaureatesList from "../components/laureates-list";
 import { useLaureatesData } from "../hooks/data";
 import { filterData, sortData, cleanData } from "../utils";
 import { SHOW_LIM } from "../config";
@@ -235,7 +235,7 @@ export default function IndexPage() {
   return (
     <>
       <DataIntro changeHandler={getDataQueryKeys} />
-      <RecordList records={laureates} />
+      <LaureatesList laureates={laureates} />
     </>
   );
 }

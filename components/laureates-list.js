@@ -1,6 +1,6 @@
 import Laureate from "./laureate";
 
-export default function RecordList({ laureates }) {
+export default function LaureatesList({ laureates }) {
   return (
     <div id="app" className="row">
       {laureates.map(laureate => {
