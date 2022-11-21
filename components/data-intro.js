@@ -6,18 +6,18 @@ export default function DataIntro({ changeHandler }) {
         Nobel prize laureates
       </h1>
       <div id="meta-row">
-        <label for="data-sort">
+        <label htmlFor="data-sort">
           Sort by
         </label>
-        <select id="data-sort">
+        <select id="data-sort" onChange={changeHandler}>
           <option value="name">Name</option>
           <option value="year">Year</option>
           <option value="country">Country</option>
         </select>
-        <button id="order">↓</button>
+        <button id="order" onClick={changeHandler}>↓</button>
 
-        <label for="data-filter">Filter by</label>
-        <select id="data-filter">
+        <label htmlFor="data-filter">Filter by</label>
+        <select id="data-filter" onChange={changeHandler}>
           <option value="All">All</option>
           <option value="Physics">Physics</option>
           <option value="Economic Sciences">Economic Sciences</option>
@@ -26,7 +26,6 @@ export default function DataIntro({ changeHandler }) {
           <option value="Peace">Peace</option>
           <option value="Physiology or Medicine">Physiology or Medicine</option>
         </select>
-        <div id="miniLoader"/>
       </div>
     </div>
   )

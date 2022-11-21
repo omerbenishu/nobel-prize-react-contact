@@ -1,5 +1,8 @@
 
 export function sortData(data, key, order) {
+  console.log(data)
+  console.log(key)
+  console.log(order)
   if (data == null) return;
   data = data.sort((a, b) => {
     if (key === "name") {
@@ -29,6 +32,8 @@ export function sortData(data, key, order) {
     }
     return 0;
   });
+  console.log("data")
+  console.log(data)
   return data;
 }
 
