@@ -1,10 +1,12 @@
+// module.exports = {
+//   images: {
+//     remotePatterns: [
+//       {
+//         protocol: 'https',
+//         hostname: 'squiggle.com.au'
+//       },
+//     ],
+//   },
+// }
 module.exports = {
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'squiggle.com.au'
-      },
-    ],
-  },
 }
