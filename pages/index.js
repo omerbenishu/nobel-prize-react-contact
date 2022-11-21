@@ -41,9 +41,9 @@ export default function IndexPage() {
   laureates = laureates.slice(0, SHOW_LIM);
 
   return (
-    <>
+    <div className="index-main">
       <DataIntro changeHandler={getDataQueryKeys} />
       <LaureatesList laureates={laureates} />
-    </>
+    </div>
   );
 }
