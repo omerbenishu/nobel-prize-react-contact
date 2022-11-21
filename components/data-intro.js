@@ -1,45 +1,41 @@
 export default function DataIntro({ changeHandler }) {
   return (
-    <div className="row">
-      <div className="item intro">
-        <div className="content">
-          <strong>This is an app to discover football data.</strong>
-        </div>
+    <div id="main">
+      <h1>
+        <img id="nobel" src="https://www.kindpng.com/picc/m/77-771594_group-search-results-brainpop-nobel-peace-prize-icon.png"/>
+        Nobel prize laureates
+      </h1>
+      <div id="meta-row">
+      <label for="data-sort">
+        Sort by
+      </label>
+      <select id="data-sort">
+        <option value="name">Name</option>
+        <option value="year">Year</option>
+        <option value="country">Country</option>
+      </select>
+      <button id="order">↓</button>
+
+      <label for="data-filter">Filter by</label>
+      <select id="data-filter">
+        <option value="All">All</option>
+        <option value="Physics">Physics</option>
+        <option value="Economic Sciences">Economic Sciences</option>
+        <option value="Literature">Literature</option>
+        <option value="Chemistry">Chemistry</option>
+        <option value="Peace">Peace</option>
+        <option value="Physiology or Medicine">Physiology or Medicine</option>
+      </select>
+      <div id="miniLoader"></div>
       </div>
-      <div className="item intro">
-        <div className="row">
-          <div className="item control-container">
-            <div className="content">
-              <div className="row">
-                <div className="item control">
-                  <div>Sort</div>
-                </div>
-                <div className="item control">
-                  <select id="data-sort" onChange={changeHandler}>
-                    <option value="a-z">A to Z</option>
-                    <option value="z-a">Z to A</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="item control-container">
-            <div className="content">
-              <div className="row">
-                <div className="item control">
-                  <div>Filter</div>
-                </div>
-                <div className="item control">
-                  <select id="data-filter" onChange={changeHandler}>
-                    <option value="-">n/a</option>
-                    <option value="pre-1980">Pre 1980 teams</option>
-                    <option value="post-1980">Post 1980 teams</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div id="loaderContainer">
+        <div id="loader"></div>
+        <p id="loadingText">
+          Loading the greatest minds might take a while, so enjoy reading a fact about them:
+          <br/>
+          When Pakistani human rights advocate Malala Yousafzai won the Nobel Peace Prize in 2014 at the age of 17, she became the youngest winner by a wide margin.  The second youngest winner to date is Sir William Lawrence Bragg who won the physics prize in 1915 at age 25 for work with the X-ray. The oldest winner? Economist Leonid Hurwicz, who won in 2007 at 90.
+
+        </p>
       </div>
     </div>
   )

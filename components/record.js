@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { IMAGE_BASE } from "../config";
+import { FLAGS_PATH,RESOURCES_LOCAL_BASE } from "../config";
 import { useGameData } from "../hooks/data";
 import { makeGamesStats } from "../utils";
 import RecordStatsRow from "./record-stats-row";
@@ -11,32 +11,59 @@ export default function Record({ record }) {
   const stats2022 = makeGamesStats(record.id, 2022, data2022);
   const stats2021 = makeGamesStats(record.id, 2021, data2021);
 
+  getFlagSrc = (country) => {
+  const src = `${FLAGS_PATH}${country.toLowerCase().replace(" ", "-")}.svg`
+  if (imageExists(src)){
+    return src;
+  }
+  return `${FLAGS_PATH}/world.svg`
+  }
+
+  imageExists = (image_url) => {
+    const http = new XMLHttpRequest();
+  
+    http.open("HEAD", image_url, false);
+    http.send();
+  
+    return http.status != 404;
+  }
+
+   getCategoryImage = (category) => {
+    switch (category) {
+      case "Physics":
+        return "./resources/physicsIcon.png";
+      case "Economic Sciences":
+        return "./resources/economicIcon.png";
+      case "Literature":
+        return "./resources/literatureIcon.png";
+      case "Chemistry":
+        return "./resources/chemistryIcon.png";
+      case "Peace":
+        return "./resources/peaceIcon.png";
+      case "Physiology or Medicine":
+        return "./resources/medIcon.png";
+      default:
+        return "./resources/medIcon.png";
+    }
+  }
+
   return (
-    <div className="item card">
-      <div className="content card-content">
-        <div className="row">
-          <div className="item card-title">
-            <h2 className="content">{record.name}</h2>
-            <p>{`Debuted in ${record.debut}`}</p>
-          </div>
-          <div className="item card-image">
-            <Image alt="Australian Football" src={`${IMAGE_BASE}${record.logo}`} className="content" width="90" height="90" />
-          </div>
-        </div>
-        <table>
-          <thead>
-            <tr>
-              <td>Year</td>
-              <td>Played</td>
-              <td>Won</td>
-              <td>Lost</td>
-            </tr>
-          </thead>
-          <tbody>
-            {loading2022 ? <tr><td className="loading">Calculating stats for year ...</td></tr> : <RecordStatsRow stats={stats2022} />}
-            {loading2021 ? <tr><td className="loading">Calculating stats for year ...</td></tr> : <RecordStatsRow stats={stats2021} />}
-          </tbody>
-        </table>
+  <div class="item">
+    <div class="data">
+      <h3 class="title">
+        <Image class="flagImg" title={`${record.country}`} src={getFlagSrc(record.country)}/>
+        {record.name}
+      </h3>
+      <Image class="categoryImg" title={record.category} src={getCategoryImage(record.category)}/>
+      <span class="category">{record.category}</span>
+      <br/>
+      <Image class="dateImg" src={`${RESOURCES_LOCAL_BASE}/calendarIcon.svg`}/>
+      <span class="year">{record.year}</span>
+      <br/>
+      <p class="desc">
+        <Image class="infoImg" src={`${RESOURCES_LOCAL_BASE}/idea.png`}/>
+        {record.desc}
+      </p>
       </div>
     </div>
   )
