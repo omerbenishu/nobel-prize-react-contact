@@ -1,14 +1,10 @@
-
 export function sortData(data, key, order) {
   if (data == null) return;
   data = data.sort((a, b) => {
     if (key === "name") {
       try {
         return a.name > b.name ? 1 * order : -1 * order;
-      } catch {
-        console.log(a);
-        console.log(b);
-      }
+      } catch {}
     }
     if (key === "year") {
       return a.year > b.year ? 1 * order : -1 * order;
@@ -48,7 +44,7 @@ function capitalizeFirstLetter(string) {
   return string[0].toUpperCase() + string.slice(1);
 }
 
-export function  cleanData(data){
+export function cleanData(data) {
   const cleaned = [];
   data.laureates.forEach((element) => {
     try {

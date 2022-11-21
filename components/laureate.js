@@ -1,7 +1,5 @@
 import Image from "next/image";
 
-
-
 function importAll(r) {
   let images = {};
   r.keys().forEach((item, index) => {

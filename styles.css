@@ -1,10 +1,4 @@
-/* !!!!!!!!!!!!!!!!!!!! */
-/* LAYOUT HELPERS */
-/* !!!!!!!!!!!!!!!!!!!! */
-
-/* These are provided here to give you a minimum starting point for a layout */
 @import url("https://fonts.googleapis.com/css?family=Roboto|Arvo");
-
 
 #container {
   width: 100%;
@@ -49,10 +43,6 @@
   }
 }
 
-/* !!!!!!!!!!!!!!!!!!!! */
-/* END LAYOUT HELPERS */
-/* !!!!!!!!!!!!!!!!!!!! */
-
 body {
   background-color: #f5f5f5;
   color: #2d2c2c;
@@ -66,7 +56,6 @@ body {
   margin: 5px;
   padding: 10px;
   height: 250px;
-  /* visual helper */
   border: 1px solid #00000012;
   border-radius: 10px;
   overflow-y: scroll;
