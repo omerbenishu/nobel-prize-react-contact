@@ -1,4 +1,6 @@
-
+import newIcon from "../resources/new.png"
+import homeIcon from "../resources/home.png"
+import ImagedLink from "./imaged-link";
 
 export default function Navbar() {
   return (
@@ -10,6 +12,10 @@ export default function Navbar() {
         />
         Nobel prize laureates
       </h1>
+      <div className="navbar-menu">
+            <ImagedLink src={homeIcon} href={'/'} title={'Home'}/>
+            <ImagedLink src={newIcon} href={'/contact'} title={'Suggest a new category'}/>
+      </div>
     </div>
   );
 }

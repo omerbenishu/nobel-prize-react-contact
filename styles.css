@@ -118,6 +118,14 @@ br {
   vertical-align: middle;
 }
 
+.linkedImage {
+  max-height: 20px;
+  max-width: 20px;
+  margin-right: 4px;
+  margin-left: 30px;
+  vertical-align: middle;
+}
+
 #nobel {
   max-height: 100px;
   max-width: 100px;
@@ -205,4 +213,36 @@ label {
 .btn:hover {
   box-shadow: 1px 1px 2px rgba(21, 21, 21, 0.2);
   background: hsl(0, 0%, 88%);
+}
+
+.navbar-menu {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0;
+  list-style-type: none;
+}
+
+.navbar-menu {
+  margin: 0 0.5rem;
+}
+
+.content {
+  flex-grow: 0;
+  flex-basis: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+.content .content {
+  padding: 0;
+}
+
+.control-container .content {
+  background-color: var(--charcoal);
+  color: var(--white);
+  margin: 0 8px;
+}
+
+.formInput{
+  margin-right: 20px;
 }
